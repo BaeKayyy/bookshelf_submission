@@ -14,3 +14,20 @@ function loadData() {
     bookCollection = JSON.parse(savedData);
   }
 }
+
+dcoument.addEventListener("DOMContentLoaded", function () {
+    const saveData = localStorage.getItem(STORAGE_KEY);
+    
+    if (saveData !== null) {
+        bookCollection = JSON.parse(saveData);
+    }
+
+    displayBooks();
+
+    const bookForm = document.getElementById("book-form");
+
+    bookForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        createNewBook();
+    })
+})
