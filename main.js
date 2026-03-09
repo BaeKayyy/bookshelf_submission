@@ -56,3 +56,43 @@ function createNewBook() {
   saveData();
   displayBooks();
 }
+
+// menampilkan buku ke rak buku
+function displayBooks(filtered = null) {
+  const incompleteShelf = document.getElementById("incompleteBookList");
+  const completeShelf = document.getElementById("completeBookList");
+
+  incompleteShelf.innerHTML = "";
+  completeShelf.innerHTML = "";
+
+  const booksToShow = filtered ? filtered : bookCollection;
+
+  for (const book of booksToShow) {
+    const bookCard = document.createElement("div");
+
+    bookCard.setAttribute("data-bookid", book.id);
+    bookCard.setAttribute("data-testid", "bookItem");
+
+    const title = document.createElement("h3");
+    title.innerText = book.title;
+    title.setAttribute("data-testid", "bookItemTitle");
+
+    const author = document.createElement("p");
+    author.innerText = "Penulis: " + book.author;
+    author.setAttribute("data-testid", "bookItemAuthor");
+
+    const year = document.createElement("p");
+    year.innerText = "Tahun: " + book.year;
+    year.setAttribute("data-testid", "bookItemYear");
+
+    const buttonContainer = document.createElement("div");
+
+    bookCard.append(title, author, year, buttonContainer);
+
+    if (book.isComplete) {
+      completeShelf.append(bookCard);
+    } else {
+      incompleteShelf.append(bookCard);
+    }
+  }
+}
