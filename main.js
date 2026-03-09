@@ -112,3 +112,49 @@ function toggleBookStatus(bookId) {
   saveData();
   displayBooks();
 }
+
+// menghapus buku dari daftar
+function removeBook(bookId) {
+
+  const newBooks = [];
+
+  for (const book of bookCollection) {
+
+    if (book.id !== bookId) {
+      newBooks.push(book);
+    }
+
+  }
+
+  bookCollection = newBooks;
+
+  saveData();
+  displayBooks();
+}
+
+
+// mengedit informasi buku
+function editBook(bookId) {
+
+  for (const book of bookCollection) {
+
+    if (book.id === bookId) {
+
+      const newTitle = prompt("Edit Judul", book.title);
+      const newAuthor = prompt("Edit Penulis", book.author);
+      const newYear = prompt("Edit Tahun", book.year);
+
+      if (newTitle && newAuthor && newYear) {
+        book.title = newTitle;
+        book.author = newAuthor;
+        book.year = parseInt(newYear);
+      }
+
+      break;
+    }
+
+  }
+
+  saveData();
+  displayBooks();
+}
