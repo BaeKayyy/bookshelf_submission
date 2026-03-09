@@ -1,5 +1,4 @@
-// Do your work here...
-const  STORAGE_KEY = "BOOKSHELF_DATA";
+const STORAGE_KEY = "BOOKSHELF_DATA";
 
 let bookCollection = [];
 
@@ -16,28 +15,33 @@ function loadData() {
 }
 
 
-// load data ketika halaman selesai dimuat 
-dcoument.addEventListener("DOMContentLoaded", function () {
-    const saveData = localStorage.getItem(STORAGE_KEY);
-    
-    if (saveData !== null) {
-        bookCollection = JSON.parse(saveData);
-    }
+// load data saat halaman selesai dimuat
+document.addEventListener("DOMContentLoaded", function () {
 
-    displayBooks();
+  loadData();
 
-    const bookForm = document.getElementById("book-form");
+  displayBooks();
 
-    bookForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        createNewBook();
-    })
-})
+  const bookForm = document.getElementById("bookForm");
+
+  bookForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    createNewBook();
+  });
+
+  const searchForm = document.getElementById("searchBook");
+
+  searchForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    searchBook();
+  });
+
+});
 
 
-// membuat fungsi untuk menambahkan buku baru ke dalam koleksi
-
+// membuat buku baru
 function createNewBook() {
+
   const title = document.getElementById("bookFormTitle").value;
   const author = document.getElementById("bookFormAuthor").value;
   const year = parseInt(document.getElementById("bookFormYear").value);
@@ -48,17 +52,21 @@ function createNewBook() {
     title: title,
     author: author,
     year: year,
-    isComplete: isComplete,
+    isComplete: isComplete
   };
 
   bookCollection.push(newBook);
 
   saveData();
   displayBooks();
+
+  document.getElementById("bookForm").reset();
 }
 
-// menampilkan buku ke rak buku
+
+// menampilkan buku ke rak
 function displayBooks(filtered = null) {
+
   const incompleteShelf = document.getElementById("incompleteBookList");
   const completeShelf = document.getElementById("completeBookList");
 
@@ -68,6 +76,7 @@ function displayBooks(filtered = null) {
   const booksToShow = filtered ? filtered : bookCollection;
 
   for (const book of booksToShow) {
+
     const bookCard = document.createElement("div");
 
     bookCard.setAttribute("data-bookid", book.id);
@@ -87,17 +96,56 @@ function displayBooks(filtered = null) {
 
     const buttonContainer = document.createElement("div");
 
+
+    const toggleButton = document.createElement("button");
+    toggleButton.setAttribute("data-testid","bookItemIsCompleteButton");
+
+    if (book.isComplete) {
+      toggleButton.innerText = "Belum selesai dibaca";
+    } else {
+      toggleButton.innerText = "Selesai dibaca";
+    }
+
+    toggleButton.addEventListener("click", function () {
+      toggleBookStatus(book.id);
+    });
+
+
+    const deleteButton = document.createElement("button");
+    deleteButton.innerText = "Hapus Buku";
+    deleteButton.setAttribute("data-testid","bookItemDeleteButton");
+
+    deleteButton.addEventListener("click", function () {
+      removeBook(book.id);
+    });
+
+
+    const editButton = document.createElement("button");
+    editButton.innerText = "Edit Buku";
+    editButton.setAttribute("data-testid","bookItemEditButton");
+
+    editButton.addEventListener("click", function () {
+      editBook(book.id);
+    });
+
+
+    buttonContainer.append(toggleButton, deleteButton, editButton);
+
     bookCard.append(title, author, year, buttonContainer);
+
 
     if (book.isComplete) {
       completeShelf.append(bookCard);
     } else {
       incompleteShelf.append(bookCard);
     }
+
   }
+
 }
 
-// mengubah status selesai dibaca
+
+// ubah status selesai dibaca
 function toggleBookStatus(bookId) {
 
   for (const book of bookCollection) {
@@ -113,7 +161,8 @@ function toggleBookStatus(bookId) {
   displayBooks();
 }
 
-// menghapus buku dari daftar
+
+// hapus buku
 function removeBook(bookId) {
 
   const newBooks = [];
@@ -133,7 +182,7 @@ function removeBook(bookId) {
 }
 
 
-// mengedit informasi buku
+// edit buku
 function editBook(bookId) {
 
   for (const book of bookCollection) {
@@ -157,4 +206,26 @@ function editBook(bookId) {
 
   saveData();
   displayBooks();
+}
+
+
+// mencari buku berdasarkan judul
+function searchBook() {
+
+  const keyword = document
+    .getElementById("searchBookTitle")
+    .value
+    .toLowerCase();
+
+  const result = [];
+
+  for (const book of bookCollection) {
+
+    if (book.title.toLowerCase().includes(keyword)) {
+      result.push(book);
+    }
+
+  }
+
+  displayBooks(result);
 }
