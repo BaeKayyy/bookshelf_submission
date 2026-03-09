@@ -15,6 +15,8 @@ function loadData() {
   }
 }
 
+
+// load data ketika halaman selesai dimuat 
 dcoument.addEventListener("DOMContentLoaded", function () {
     const saveData = localStorage.getItem(STORAGE_KEY);
     
@@ -31,3 +33,26 @@ dcoument.addEventListener("DOMContentLoaded", function () {
         createNewBook();
     })
 })
+
+
+// membuat fungsi untuk menambahkan buku baru ke dalam koleksi
+
+function createNewBook() {
+  const title = document.getElementById("bookFormTitle").value;
+  const author = document.getElementById("bookFormAuthor").value;
+  const year = parseInt(document.getElementById("bookFormYear").value);
+  const isComplete = document.getElementById("bookFormIsComplete").checked;
+
+  const newBook = {
+    id: Date.now(),
+    title: title,
+    author: author,
+    year: year,
+    isComplete: isComplete,
+  };
+
+  bookCollection.push(newBook);
+
+  saveData();
+  displayBooks();
+}

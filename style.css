@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f6f7fb;
+  color: #1e293b;
+}
+
+header {
+  background: white;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+main {
+  max-width: 850px;
+  margin: auto;
+  padding: 25px;
+}
+
+section {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #e5e7eb;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+button {
+  padding: 7px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+#bookFormSubmit {
+  background: #334155;
+  color: white;
+}
+
+#searchSubmit {
+  background: #e2e8f0;
+}
+
+[data-testid="bookItem"] {
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+[data-testid="bookItemTitle"] {
+  margin: 0;
+  font-size: 15px;
+}
+
+[data-testid="bookItemAuthor"],
+[data-testid="bookItemYear"] {
+  margin: 3px 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+[data-testid="bookItemIsCompleteButton"] {
+  background: #dcfce7;
+}
+
+[data-testid="bookItemDeleteButton"] {
+  background: #fee2e2;
+}
+
+[data-testid="bookItemEditButton"] {
+  background: #e0e7ff;
+}
