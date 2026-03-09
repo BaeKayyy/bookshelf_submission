@@ -96,3 +96,19 @@ function displayBooks(filtered = null) {
     }
   }
 }
+
+// mengubah status selesai dibaca
+function toggleBookStatus(bookId) {
+
+  for (const book of bookCollection) {
+
+    if (book.id === bookId) {
+      book.isComplete = !book.isComplete;
+      break;
+    }
+
+  }
+
+  saveData();
+  displayBooks();
+}
